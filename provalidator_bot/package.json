@@ -1,0 +1,28 @@
+{
+  "name": "provalidator_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "provalidator_bot.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "log4js": "^6.3.0",
+    "sync-fetch": "^0.3.0",
+    "telegraf": "^3.27.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "restart": "kill -9 `ps -ef | grep 'node provalidator_bot.js' | grep -v grep | awk '{print $2}'` ; node provalidator_bot.js >> ./provalidator_bot.log 2>&1 &",
+    "start": "node provalidator_bot.js >> ./provalidator_bot.log 2>&1 &",
+    "stop": "kill -9 `ps -ef | grep 'node provalidator_bot.js' | grep -v grep | awk '{print $2}'`"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zenon-provalidator/provalidator_bot.git"
+  },
+  "author": "zenon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zenon-provalidator/provalidator_bot/issues"
+  },
+  "homepage": "https://github.com/zenon-provalidator/provalidator_bot#readme"
+}
