@@ -12,7 +12,7 @@ function getMessage(coin){
 			let notStakedTokens = totalTokens - stakedTokens
 			let stakedPercent = (stakedTokens / totalTokens * 100).toFixed(0)
 			let notStakedPercent = (notStakedTokens / totalTokens * 100).toFixed(0)
-			msg += `💰Price : $${price}\n\n`
+			msg += `💰Price(on Sifchain’s DEX) : $${price}\n\n`
 			msg += `🥩Staked: ${numberWithCommas(stakedTokens)} (${stakedPercent}%)\n\n`
 			msg += `🔓Unstaked : ${numberWithCommas(notStakedTokens)} (${notStakedPercent}%)\n\n`
 			msg += `⛓️Total : ${numberWithCommas(totalTokens)} (100%)\n\n`
