@@ -1,28 +1,71 @@
 const fetch = require('sync-fetch')
 require('dotenv').config()
+const logger = require('./log4js').log4js//logger
+const fs = require('fs');
+
+//let rawdata = fs.readFileSync('student.json');
+//let student = JSON.parse(rawdata);
+//fs.writeFileSync(file, data[, options])
 
 
 function getMessage(coin){
-	let msg = `💫 Sifchain (ROWAN)\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n`
-	switch(coin){
-		case 'sifchain' :
-			let price = getSifDexPrice().toFixed(4)
-			let totalTokens = (getTokenTotal('rowan') / 1000000000000000000).toFixed(0)
-			let stakedTokens = (getStaked() / 1000000000000000000).toFixed(0)
-			let notStakedTokens = totalTokens - stakedTokens
-			let stakedPercent = (stakedTokens / totalTokens * 100).toFixed(0)
-			let notStakedPercent = (notStakedTokens / totalTokens * 100).toFixed(0)
-			msg += `💰Price : $${price} (Sifchain’s DEX)\n\n`
-			msg += `🥩Staked : ${numberWithCommas(stakedTokens)} (${stakedPercent}%)\n\n`
-			msg += `🔓Unstaked : ${numberWithCommas(notStakedTokens)} (${notStakedPercent}%)\n\n`
-			msg += `⛓️Total : ${numberWithCommas(totalTokens)} (100%)\n\n`
-			msg += `ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n`
-			msg += `Supported by <a href='https://provalidator.com'>Provalidator</a>\n`
-//			msg += `<a href='https://provalidator.com'>Home</a> <a href='https://twitter.com/provalidator'>Twitter</a> <a href='https://medium.com/provalidator'>Medium</a>`
-			break
+	let msg = ``
+	let price = ``
+	let totalTokens = ``
+	let stakedTokens = ``
+	let notStakedTokens = ``
+	let stakedPercent = ``
+	let notStakedPercent = ``
+	try {
+		if(coin == 'sifchain'){
+			msg = `💫 Sifchain (ROWAN)\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n`	//msg
+			let file = `./json/${coin}.json`
+			let rJson = JSON.parse(fs.readFileSync(file))
+			
+			var wdate = parseInt(rJson.wdate) + (60 * 1000)
+			var cdate = parseInt(new Date().getTime())
+			
+			// new
+			if( wdate <  cdate) {
+//				console.log('new' + cdate)
+				price = getSifDexPrice().toFixed(4)
+				totalTokens = (getTokenTotal('rowan') / 1000000000000000000).toFixed(0)
+				stakedTokens = (getStaked() / 1000000000000000000).toFixed(0)
+				notStakedTokens = totalTokens - stakedTokens
+				stakedPercent = (stakedTokens / totalTokens * 100).toFixed(0)
+				notStakedPercent = (notStakedTokens / totalTokens * 100).toFixed(0)
+				let wJson = {
+					"price" : price,
+					"totalTokens" : totalTokens,
+					"stakedTokens" : stakedTokens,
+					"notStakedTokens" : notStakedTokens,
+					"stakedPercent" : stakedPercent,
+					"notStakedPercent" : notStakedPercent,
+					"wdate" : new Date().getTime()
+				}
+				fs.writeFileSync(file, JSON.stringify(wJson))
+			}else { //old
+//				console.log('old'+ cdate)
+				price = rJson.price
+				totalTokens = rJson.totalTokens
+				stakedTokens = rJson.stakedTokens
+				notStakedTokens = rJson.notStakedTokens
+				stakedPercent = rJson.stakedPercent
+				notStakedPercent = rJson.notStakedPercent
+			}
+		} // end if
+		msg += `💰Price : $${price} (Sifchain’s DEX)\n\n`
+		msg += `🥩Staked : ${numberWithCommas(stakedTokens)} (${stakedPercent}%)\n\n`
+		msg += `🔓Unstaked : ${numberWithCommas(notStakedTokens)} (${notStakedPercent}%)\n\n`
+		msg += `⛓️Total : ${numberWithCommas(totalTokens)} (100%)\n\n`
+		msg += `ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n`
+		msg += `Supported by <a href='https://provalidator.com'>Provalidator</a>\n`
+		return msg
+	}catch(err){
+		logger.error(`=======================sifchain msg=======================`)
+		logger.error(err)
+		return null
 	}
-	
-	return msg
 }
 
 function numberWithCommas(x) {

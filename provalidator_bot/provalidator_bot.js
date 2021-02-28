@@ -12,17 +12,16 @@ bot.command('sifchain', (ctx) =>{
 	try{
 		ctx.reply(`Please wait..`).then((m) => {
 			let msg = func.getMessage('sifchain')
-//			ctx.reply(msg, Extra.HTML())
-			bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, msg, Extra.HTML())
+			bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, msg, Extra.HTML()).catch(err=>{
+				logger.error(`=======================sifchain main1=======================`)
+				logger.error(err)
+				bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, `Sorry! bot has error.`)
+			})
 		})
-//		
-////		editMessageText
-//		bot.telegram.sendMessage(ctx.state.telegramId, 'Please wait..').then((m) => {
-//		    bot.telegram.editMessageText(editChatId, m.message_id, m.message_id, encMsg)
-//		})
 		
 	}catch(e){
-		ctx.reply(`Sorry! bot has error.`)
+		bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, `Sorry! bot has error.`)
+		logger.error(`=======================sifchain main2=======================`)
 		logger.error(e)
 	}
 })

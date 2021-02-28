@@ -5,6 +5,7 @@
   "main": "provalidator_bot.js",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
     "log4js": "^6.3.0",
     "sync-fetch": "^0.3.0",
     "telegraf": "^3.27.1"
