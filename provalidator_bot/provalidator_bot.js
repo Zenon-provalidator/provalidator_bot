@@ -11,19 +11,23 @@ bot.use(session())
 ////bot start
 bot.startPolling()
 
+let msgArr = new Array()//save msg array
+
 bot.command('sifchain', (ctx) =>{
 	//delete existing message
-	if(typeof ctx.session.msg_id != 'undefined' && typeof ctx.session.chat_id != 'undefined'){
-		bot.telegram.deleteMessage(ctx.session.chat_id, ctx.session.msg_id).catch(err=>{
+//	if(typeof ctx.session.msg_id != 'undefined' && typeof ctx.session.chat_id != 'undefined'){
+	if(typeof msgArr[ctx.chat.id] != 'undefined'){
+		bot.telegram.deleteMessage(ctx.chat.id, msgArr[ctx.chat.id]).catch(err=>{
 			logger.error(err)
 		})
 	}
 	//show message
 	ctx.reply(`Please wait..`).then((m) => {
 		let msg = func.getMessage('sifchain')//get message
-		//session
-		ctx.session.msg_id = m.message_id
-		ctx.session.chat_id = m.chat.id
+//		//session
+//		ctx.session.msg_id = m.message_id
+//		ctx.session.chat_id = m.chat.id
+		msgArr[m.chat.id] = m.message_id
 		//edit message
 		bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, msg, Extra.HTML()).catch(err=>{				
 			logger.error(`=======================sifchain main1=======================`)
