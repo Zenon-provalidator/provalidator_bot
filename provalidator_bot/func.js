@@ -76,8 +76,8 @@ function getMessage(coin){
 		msg += `🥩<b>Staking</b>\n\n`
 		msg += `✅Community : ${numberWithCommas(communityTokens)} (${communityPercent}%)\n\n`
 //		msg += `**Team : ${numberWithCommas(teamTokens)} (${teamPercent}%)\n\n`
-		msg += `✅Total Staked : ${numberWithCommas(notStakedTokens)} (${notStakedPercent}%)\n\n`
-		msg += `⛓️Max Supply : ${numberWithCommas(totalTokens)} (100%)\n\n`
+		msg += `✅Total : ${numberWithCommas(notStakedTokens)} (${notStakedPercent}%)\n\n`
+		msg += `⛓️Max Sply : ${numberWithCommas(totalTokens)} (100%)\n\n`
 		msg += `📌150M staked by Foundation will be removed soon and is not eligible for validator rewards.\n\n`
 		msg += `ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n`
 		msg += `Supported by <a href='https://provalidator.com'>Provalidator</a>\n`
