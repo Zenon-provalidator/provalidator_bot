@@ -23,10 +23,10 @@ function getMessage(coin){
 	try {
 		if(coin == 'sifchain'){
 			msg = `💫 <b>Sifchain (ROWAN)</b>\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n`	//msg
+			//no file = create
 			let file = `./json/${coin}.json`
-			let rJson = JSON.parse(fs.readFileSync(file))
-			
-			var wdate = parseInt(rJson.wdate) + (60 * 1000)
+			let rJson = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file)) : ''
+			var wdate = fs.existsSync(file) ? parseInt(rJson.wdate) + (60 * 1000) : 0
 			var cdate = parseInt(new Date().getTime())
 			
 			// new
