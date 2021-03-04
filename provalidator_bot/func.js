@@ -83,7 +83,8 @@ function getMessage(coin){
 		msg += `⛓️Max Sply: ${numberWithCommas(maxTokens)} (100%)\n\n`
 		msg += `📌${numeral(teamTokens).format('0.0a').toUpperCase()} staked by Foundation will be removed soon and is not eligible for validator rewards.\n\n`
 		msg += `ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n`
-		//msg += `Supported by <a href='https://provalidator.com'>Provalidator</a>\n`
+		msg += `Supported by Provalidator\n`
+		//<a href='https://provalidator.com'>
 		return msg
 	}catch(err){
 		logger.error(`=======================sifchain msg=======================`)
