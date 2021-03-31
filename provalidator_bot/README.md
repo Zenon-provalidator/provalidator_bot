@@ -10,7 +10,7 @@
 
 ### ex) /sifchain , /agoric
 
-## bot show coin's infomation.
+## bot shows coin's information.
 💫 Sifchain (ROWAN)
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
