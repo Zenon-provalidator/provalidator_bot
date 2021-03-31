@@ -13,9 +13,9 @@ bot.startPolling()
 
 let msgArr = new Array()//save msg array
 
+//sifchain
 bot.command('sifchain', (ctx) =>{
 	//delete existing message
-//	if(typeof ctx.session.msg_id != 'undefined' && typeof ctx.session.chat_id != 'undefined'){
 	if(typeof msgArr[ctx.chat.id] != 'undefined'){
 		bot.telegram.deleteMessage(ctx.chat.id, msgArr[ctx.chat.id]).catch(err=>{
 			logger.error(err)
@@ -24,9 +24,6 @@ bot.command('sifchain', (ctx) =>{
 	//show message
 	ctx.reply(`Please wait..`).then((m) => {
 		let msg = func.getMessage('sifchain')//get message
-//		//session
-//		ctx.session.msg_id = m.message_id
-//		ctx.session.chat_id = m.chat.id
 		msgArr[m.chat.id] = m.message_id
 		//edit message
 		bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, msg, Extra.HTML()).catch(err=>{				
@@ -36,6 +33,31 @@ bot.command('sifchain', (ctx) =>{
 		})
 	})
 }).catch(err=>{
-//	bot.telegram.sendMessage(m.chat.id, m.message_id, `Sorry! bot has error.`)
+	bot.telegram.reply(`Sorry! bot has error.`)
+	logger.error(err)
+})
+
+//agoric
+//var sum = 0; $(".voting-power span").each(function(){ var v = parseInt($(this).text().replaceAll("(2.05%)","").replaceAll("(2.07%)","").replaceAll("(2.09%)","").replaceAll("Voting Power","")); if( v >0 ){ sum += v; console.log(v); }  }); console.log(sum);
+bot.command('agoric', (ctx) =>{
+	//delete existing message
+	if(typeof msgArr[ctx.chat.id] != 'undefined'){
+		bot.telegram.deleteMessage(ctx.chat.id, msgArr[ctx.chat.id]).catch(err=>{
+			logger.error(err)
+		})
+	}
+	//show message
+	ctx.reply(`Please wait..`).then((m) => {
+		let msg = func.getMessage('agoric')//get message
+		msgArr[m.chat.id] = m.message_id
+		//edit message
+		bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, msg, Extra.HTML()).catch(err=>{				
+			logger.error(`=======================agoric main1=======================`)
+			logger.error(err)
+			bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, `Sorry! bot has error.`)
+		})
+	})
+}).catch(err=>{
+	bot.telegram.reply(`Sorry! bot has error.`)
 	logger.error(err)
 })
