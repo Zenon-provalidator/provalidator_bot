@@ -61,27 +61,3 @@ bot.command('agoric', (ctx) =>{
 	bot.telegram.reply(`Sorry! bot has error.`)
 	logger.error(err)
 })
-
-//cosmos
-bot.command('cosmos', (ctx) =>{
-	//delete existing message
-	if(typeof msgArr[ctx.chat.id] != 'undefined'){
-		bot.telegram.deleteMessage(ctx.chat.id, msgArr[ctx.chat.id]).catch(err=>{
-			logger.error(err)
-		})
-	}
-	//show message
-	ctx.reply(`Please wait..`).then((m) => {
-		let msg = func.getMessage('cosmos')//get message
-		msgArr[m.chat.id] = m.message_id
-		//edit message
-		bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, msg, Extra.HTML()).catch(err=>{				
-			logger.error(`=======================cosmos main1=======================`)
-			logger.error(err)
-			bot.telegram.editMessageText(m.chat.id, m.message_id, m.message_id, `Sorry! bot has error.`)
-		})
-	})
-}).catch(err=>{
-	bot.telegram.reply(`Sorry! bot has error.`)
-	logger.error(err)
-})
