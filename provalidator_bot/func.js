@@ -23,64 +23,7 @@ function getMessage(coin){
 		var wdate = fs.existsSync(file) ? parseInt(rJson.wdate) + (60 * 1000) : 0
 		var cdate = parseInt(new Date().getTime())
 		
-		if(coin == 'cosmos'){
-			let cosmosInfo = getCosmosInfo()
-			msg = `⚛️ <b>Cosmos(Atom)</b>\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n`
-			if( wdate <  cdate) {
-				maxTokens = (cosmosInfo.max_tokens/ 1000000).toFixed(0)
-				stakedTokens = (cosmosInfo.bonded_tokens / 1000000 ).toFixed(0)
-				stakedPercent = (stakedTokens / maxTokens * 100).toFixed(0)
-				notStakedTokens = maxTokens - stakedTokens
-				notStakedPercent = (notStakedTokens / maxTokens * 100).toFixed(0)
-				let wJson = {
-					"maxTokens" : maxTokens,
-					"stakedTokens" : stakedTokens,
-					"stakedPercent" : stakedPercent,
-					"notStakedTokens" : notStakedTokens,
-					"notStakedPercent" : notStakedPercent,
-					"wdate" : new Date().getTime()
-				}
-				fs.writeFileSync(file, JSON.stringify(wJson))
-			}else{
-				maxTokens = rJson.maxTokens
-				stakedTokens = rJson.stakedTokens
-				stakedPercent = rJson.stakedPercent
-				notStakedTokens = rJson.notStakedTokens
-				notStakedPercent = rJson.notStakedPercent
-			}
-			msg += `🥩<b>Staking</b>\n\n`
-			msg += `🔐Staked : ${numberWithCommas(stakedTokens)} (${stakedPercent}%)\n\n🔓Unstaked : ${numberWithCommas(notStakedTokens)} (${notStakedPercent}%)\n\n⛓️Max Sply : ${numberWithCommas(maxTokens)} (100%)`
-			msg += `\n\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n`
-			msg += `Supported by <b>Provalidator</b>\n`
-		}else if(coin == 'agoric'){
-			msg = `💫 <b>Agoric</b>\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n`
-			if( wdate <  cdate) {
-				maxTokens = (getTokenTotal(coin) / 1000000).toFixed(0)
-				stakedTokens = (getStaked(coin) / 1000000 ).toFixed(0)
-				stakedPercent = (stakedTokens / maxTokens * 100).toFixed(2)
-				notStakedTokens = maxTokens - stakedTokens
-				notStakedPercent = (notStakedTokens / maxTokens * 100).toFixed(2)
-				let wJson = {
-					"maxTokens" : maxTokens,
-					"stakedTokens" : stakedTokens,
-					"stakedPercent" : stakedPercent,
-					"notStakedTokens" : notStakedTokens,
-					"notStakedPercent" : notStakedPercent,
-					"wdate" : new Date().getTime()
-				}
-				fs.writeFileSync(file, JSON.stringify(wJson))
-			}else{
-				maxTokens = rJson.maxTokens
-				stakedTokens = rJson.stakedTokens
-				stakedPercent = rJson.stakedPercent
-				notStakedTokens = rJson.notStakedTokens
-				notStakedPercent = rJson.notStakedPercent
-			}
-			msg += `🥩<b>Staking</b>\n\n`
-			msg += `📌maxTokens : ${numberWithCommas(maxTokens)} (100%)\n📌stakedTokens : ${numberWithCommas(stakedTokens)} (${stakedPercent}%)\n📌notStakedTokens : ${numberWithCommas(notStakedTokens)} (${notStakedPercent}%)`
-			msg += `\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n`
-			msg += `Supported by <b>Provalidator</b>\n`
-		}else if(coin == 'sifchain'){
+		if(coin == 'sifchain'){
 			msg = `💫 <b>Sifchain (ROWAN)</b>\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n`	//msg
 			
 			// new
