@@ -12,7 +12,7 @@
 ### ex) /sifchain
 
 ## bot shows coin's information.
-💫 Sifchain (ROWAN)
+💫 Sifchain (ROWAN)<br>
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 💰Price: $0.8302 (Sifchain’s DEX)
@@ -27,5 +27,5 @@
 
 📌148.9M staked by Foundation will be removed soon and is not eligible for validator rewards.
 
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br>
 Supported by Provalidator
