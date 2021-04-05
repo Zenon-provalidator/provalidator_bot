@@ -2,13 +2,14 @@
 
 # provalidator telegram bot
 
-
+# ***Notice**
++ Agoric is moved https://github.com/zenon-provalidator/provalidator_agoric_bot
 
 ## 1. Invite @ProvalidatorBot
 
 ## 2. Enter command coin name 
 
-### ex) /sifchain , /agoric
+### ex) /sifchain
 
 ## bot shows coin's information.
 💫 Sifchain (ROWAN)
