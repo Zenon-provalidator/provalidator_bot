@@ -141,9 +141,14 @@ function getCosmosInfo(){
 }
 
 function getSifDexPrice(tokenDenom){
-	let json = fetch(process.env.SIF_DEX_API_URL).json()
-	let jsonResult = json.body
-	return json.body.rowanUSD
+	try{
+		let json = fetch(process.env.SIF_DEX_API_URL).json()
+		return json.body.rowanUSD
+	} catch(err){
+		console.error(err)
+		let json = fetch('https://api.coingecko.com/api/v3/simple/price?ids=sifchain&vs_currencies=usd').json()
+		return json.sifchain.usd
+	}	
 }
 
 function getTeamTokens(){
