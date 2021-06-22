@@ -107,20 +107,22 @@ function getTokenTotal(coin){
 	
 	if(coin == 'sifchain'){
 		tokenDenom = 'rowan'
-		url = process.env.SIF_API_URL+'/supply/total'
+//		url = process.env.SIF_API_URL+'/supply/total'
+		url = process.env.SIF_API_URL_NEW + '/asset/totalSupply'
 	} else if(coin == 'agoric'){		
 		tokenDenom = 'uagstake'
 		url = process.env.AG_API_URL+'/bank/total'
 	}
 	
 	let json = fetch(url).json()
-	let jsonResult = json.result
-	
-	for(var i=0; i<jsonResult.length; i++){
-		if(jsonResult[i].denom == tokenDenom){
-			return jsonResult[i].amount
-		}	
-	}
+//	let jsonResult = json.result
+//	
+//	for(var i=0; i<jsonResult.length; i++){
+//		if(jsonResult[i].denom == tokenDenom){
+//			return jsonResult[i].amount
+//		}	
+//	}
+	return json.amount
 }
 
 function getCosmosInfo(){
