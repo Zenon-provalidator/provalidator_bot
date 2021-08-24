@@ -13,6 +13,8 @@ function getMessage(coin){
 	let stakedPercent = ``
 	let totalPercent = ``
 	let teamTokens = ``
+	let tpTokens = ``
+	let prvTokens = ``
 	let communityTokens = ``
 	let communityPercent = ``
 		
@@ -32,8 +34,10 @@ function getMessage(coin){
 				maxTokens = (getTokenTotal(coin) / 1000000000000000000).toFixed(0)
 				stakedTokens = (getStaked(coin) / 1000000000000000000).toFixed(0)
 				stakedPercent = (stakedTokens / maxTokens * 100).toFixed(0)
-				teamTokens = getTeamTokens()
+				tpTokens = getTokens()
+				teamTokens = tpTokens[0]
 				teamPercent = (teamTokens / maxTokens * 100).toFixed(0)
+				prvTokens = tpTokens[1]
 				communityTokens = stakedTokens - teamTokens
 				communityPercent = (communityTokens / maxTokens * 100).toFixed(0)
 				totalTokens = teamTokens + communityTokens
@@ -48,6 +52,7 @@ function getMessage(coin){
 					"totalPercent" : totalPercent,
 					"teamTokens" : teamTokens,
 					"teamPercent" : teamPercent,
+					"prvTokens" : prvTokens,
 					"communityTokens" : communityTokens,
 					"communityPercent" : communityPercent,
 					"wdate" : new Date().getTime()
@@ -62,6 +67,7 @@ function getMessage(coin){
 				totalPercent = rJson.totalPercent
 				teamTokens = rJson.teamTokens
 				teamPercent = rJson.teamPercent
+				prvTokens = rJson.prvTokens
 				communityTokens = rJson.communityTokens
 				communityPercent = rJson.communityPercent
 			}
@@ -70,9 +76,10 @@ function getMessage(coin){
 			msg += `✅Community: ${numberWithCommas(communityTokens)} (${communityPercent}%)\n\n`
 			msg += `✅Total: ${numberWithCommas(totalTokens)} (${totalPercent}%)\n\n`
 			msg += `⛓️Max Sply: ${numberWithCommas(maxTokens)} (100%)\n\n`
-			msg += `📌${numeral(teamTokens).format('0.0a').toUpperCase()} staked by Foundation will be removed soon and is not eligible for validator rewards.\n\n`
+			//msg += `📌${numeral(teamTokens).format('0.0a').toUpperCase()} staked by Foundation will be removed soon and is not eligible for validator rewards.\n\n`
+			msg += `❤️Staked to <b>Provalidator</b>: ${numberWithCommas(prvTokens)}\n\n`
 			msg += `ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n`
-			msg += `Supported by <b>Provalidator</b>\n`
+			msg += `Supported by <a href='https://provalidator.com' target='_blank'>Provalidator</a>\n`
 		} // end sifchain
 		
 
@@ -102,27 +109,9 @@ function getStaked(coin){
 }
 
 function getTokenTotal(coin){
-	let url = ''
-	let tokenDenom = ''
-	
-	if(coin == 'sifchain'){
-		tokenDenom = 'rowan'
-//		url = process.env.SIF_API_URL+'/supply/total'
-		url = process.env.SIF_API_URL_NEW + '/asset/totalSupply'
-	} else if(coin == 'agoric'){		
-		tokenDenom = 'uagstake'
-		url = process.env.AG_API_URL+'/bank/total'
-	}
-	
+	let url = process.env.SIF_API_URL + '/bank/total/rowan'
 	let json = fetch(url).json()
-//	let jsonResult = json.result
-//	
-//	for(var i=0; i<jsonResult.length; i++){
-//		if(jsonResult[i].denom == tokenDenom){
-//			return jsonResult[i].amount
-//		}	
-//	}
-	return json.amount
+	return json.result.amount
 }
 
 function getCosmosInfo(){
@@ -145,7 +134,7 @@ function getCosmosInfo(){
 function getSifDexPrice(tokenDenom){
 	try{
 		let json = fetch(process.env.SIF_DEX_API_URL).json()
-		return json.body.rowanUSD
+		return parseFloat(json.body.rowanUSD.toString())
 	} catch(err){
 		console.error(err)
 		let json = fetch('https://api.coingecko.com/api/v3/simple/price?ids=sifchain&vs_currencies=usd').json()
@@ -153,23 +142,28 @@ function getSifDexPrice(tokenDenom){
 	}	
 }
 
-function getTeamTokens(){
+function getTokens(){
 	let json = fetch(process.env.SIF_API_URL+'/staking/validators').json()
 
 	let team_tokens = 0
+	let prv_token = 0
 
 	for(var j in json.result){ 
 		let operator_address =json.result[j].operator_address
 		let moniker = json.result[j].description.moniker
 		let team_validators = ['alice', 'jenna','lisa', 'mary', 'sophie', 'ambre', 'elizabeth', 'jane']
-
+		
 	   // target
-		if(team_validators .indexOf(moniker) >=0) {
+		if(team_validators.indexOf(moniker) >=0) {
 			let tokens = json.result[j].tokens / 1000000000000000000
 			team_tokens += parseInt(tokens) 
 		}
+		//provalidator
+		if("Provalidator".indexOf(moniker) >=0){
+			prv_token = Math.round(json.result[j].tokens / 1000000000000000000)
+		}
 	}
-	return team_tokens
+	return [team_tokens, prv_token]
 }
 
 module.exports = {
